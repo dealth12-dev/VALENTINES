@@ -1,0 +1,800 @@
+{% extends 'app/index.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: #f4f4f4;
+            
+            /* Hide scrollbar but allow scrolling */
+            overflow: auto;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 100px;
+        }
+
+
+
+
+
+        .first-meeting {
+            padding: 40px 20px;
+            margin: 20px auto;
+            max-width: 80%;
+            text-align: center;
+        }
+
+        .first-meeting h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .first-meeting p {
+            color: #555;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+
+
+
+
+
+
+
+
+
+        .date, .milestone, .gallery {
+            padding: 40px 10px;
+            margin-bottom: 20px;    
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            width: 300px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            text-align: center;
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .card-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        .letter {
+            padding: 40px 20px;
+            margin: 20px auto;
+            max-width: 80%;
+            text-align: center;
+        }
+
+        .letter h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .letter div {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px auto;
+            max-width: 600px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .letter h3 {
+            color: #444;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .letter p {
+            color: #555;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .letter p:last-child {
+            font-style: italic;
+            color: #777;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .duration {
+            padding: 60px 30px; /* Increased padding */
+            margin: auto;
+            max-width: 100%;
+            border-radius: 15px;
+            text-align: center;
+            color: #222;
+            transition: all 0.3s ease-in-out;
+            margin-bottom: 100px;
+        }
+
+        .duration h2 {
+            color: #111;
+            margin-bottom: 20px;
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        #relationshipDuration {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 20px;
+            align-items: center;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Digit Box */
+        .digit-box {
+            font-size: 36px;
+            font-weight: bold;
+            color: #111;
+            padding: 15px 20px;
+            border-radius: 10px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px; /* Adjusted for better responsiveness */
+            height: 70px;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15),
+                        -2px -2px 10px rgba(255, 255, 255, 0.8);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .digit-box:hover {
+            transform: scale(1.1);
+        }
+
+        /* Label */
+        .label {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            margin: 0 12px;
+            opacity: 0.9;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* 📱 Mobile Styles (For Small Screens) */
+        @media (max-width: 768px) {
+            .duration {
+                padding: 30px 15px;
+            }
+
+            .duration h2 {
+                font-size: 28px;
+            }
+
+            #relationshipDuration {
+                gap: 8px;
+            }
+
+            .digit-box {
+                font-size: 28px; /* Smaller digits */
+                width: 40px;
+                height: 55px;
+                padding: 10px 15px;
+            }
+
+            .label {
+                font-size: 18px;
+                margin: 0 8px;
+            }
+        }
+
+        /* 📱 Extra Small Screens (For Phones) */
+        @media (max-width: 480px) {
+            .duration {
+                padding: 25px 10px;
+            }
+
+            .duration h2 {
+                font-size: 24px;
+            }
+
+            .digit-box {
+                font-size: 24px;
+                width: 35px;
+                height: 50px;
+                padding: 8px 12px;
+            }
+
+            .label {
+                font-size: 16px;
+                margin: 0 6px;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .video-memories {
+            text-align: center;
+            padding: 50px 20px;
+            background-color: #f9f9f9;
+        }
+
+        .video-memories h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .video-memories div {
+            display: inline-block;
+            margin: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .video-memories div:hover {
+            transform: scale(1.05);
+        }
+
+        .video-memories video {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 8px;
+        }
+
+        .video-memories p {
+            margin-top: 10px;
+            font-size: 1rem;
+            color: #555;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .valentine {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .valentine h2 {
+            font-size: 2.5rem;
+            color: #d6336c;
+            margin-bottom: 20px;
+            font-family: 'Cursive', sans-serif;
+        }
+
+        .valentine div {
+            display: inline-block;
+            max-width: 500px;
+            padding: 20px;
+            margin: 15px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            position: relative;
+        }
+
+        .valentine div:hover {
+            transform: translateY(-5px);
+        }
+
+        .valentine h3 {
+            font-size: 1.2rem;
+            color: #b81c48;
+            margin-bottom: 10px;
+        }
+
+        .valentine p {
+            font-size: 1rem;
+            color: #444;
+            font-style: italic;
+        }
+
+        .valentine p:last-child {
+            font-weight: bold;
+        }
+
+        .valentine::before {
+            content: "❤️";
+            font-size: 3rem;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.2;
+        }
+
+        .valentine p.no-messages {
+            font-size: 1.2rem;
+            color: #b81c48;
+            font-weight: bold;
+        }
+
+
+        /* Fullscreen Cover Page */
+        .cover {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #e2b2b2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        /* Cover Page Content */
+        .cover-content {
+            background: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 320px;
+        }
+
+        .cover-content h2 {
+            color: #d6336c;
+            margin-bottom: 15px;
+        }
+
+        .pin-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .pin-input {
+            width: 40px;
+            height: 50px;
+            text-align: center;
+            font-size: 24px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .pin-input:focus {
+            border-color: #d6336c;
+            outline: none;
+        }
+
+        .cover-content button {
+            width: 100%;
+            padding: 10px;
+            background: #d6336c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .cover-content button:hover {
+            background: #b81c48;
+        }
+
+
+
+        .success-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ff4d6d; /* Sweet red-pink color */
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            padding: 20px 50px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 10000;
+            font-family: 'Pacifico', cursive; /* Romantic handwritten font */
+            animation: pop 0.3s ease-in-out;
+        }
+
+        /* Small animation effect */
+        @keyframes pop {
+            0% {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+    <div id="coverPage" class="cover">
+        <div class="cover-content">
+            <h2>Enter PIN</h2>
+            <div class="pin-container">
+                <input type="password" maxlength="1" class="pin-input" oninput="moveNext(this, 0)">
+                <input type="password" maxlength="1" class="pin-input" oninput="moveNext(this, 1)">
+                <input type="password" maxlength="1" class="pin-input" oninput="moveNext(this, 2)">
+                <input type="password" maxlength="1" class="pin-input" oninput="moveNext(this, 3)">
+                <input type="password" maxlength="1" class="pin-input" oninput="moveNext(this, 4)">
+                <input type="password" maxlength="1" class="pin-input" oninput="moveNext(this, 5)">
+            </div>
+            <button onclick="checkPin()">Unlock</button>
+            <p id="error-message" style="display: none; color: red;">Incorrect PIN. Try again.</p>
+        </div>
+    </div>
+
+<!-- Lock Button -->
+<button id="lockButton" onclick="lockPage()" style="position: fixed; bottom: 20px; right: 20px; background: #dc3545; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; display: none;">🔒 Lock</button>
+    
+    <div class="container">
+
+        <section class="first-meeting" id="first-meeting">
+            <h2>First Meeting</h2>
+            <p>{{ first_meeting.description }}</p>
+        </section>
+    
+        <section class="date" id="date">
+            <h2>Memorable Dates</h2>
+            <div class="card-container">
+                {% for date in memorable_dates %}
+                    <div class="card">
+                        <h3>{{ date.date }}</h3>
+                        <img src="{{ date.image.url }}" alt="Memorable Image" width="300">
+                        <p>{{ date.description }}</p>
+                    </div>
+                {% empty %}
+                    <p>No memorable dates yet.</p>
+                {% endfor %}
+            </div>
+        </section>
+        
+    
+        <section class="milestone" id="milestone">
+            <h2>Milestones & Achievements</h2>
+            <div class="card-container">
+                {% for milestone in milestones %}
+                    <div class="card">
+                        <h3>Milestone on {{ milestone.date_achieved }}</h3>
+                        <img src="{{ milestone.image.url }}" alt="Milestone Image" width="300">
+                        <p>{{ milestone.description }}</p>
+                    </div>
+                {% empty %}
+                    <p>No milestones yet.</p>
+                {% endfor %}
+            </div>
+        </section>
+    
+        <section class="gallery" id="gallery">
+            <h2>Photo Gallery</h2>
+            <div class="card-container">
+                {% for photo in photos %}
+                    <div class="card">
+                        <img src="{{ photo.image.url }}" alt="Gallery Image" width="300">
+                        <p>{{ photo.caption }}</p>
+                    </div>
+                {% empty %}
+                    <p>No photos available.</p>
+                {% endfor %}
+            </div>
+        </section>
+    
+        <section class="letter" id="letter">
+            <h2>Letter</h2>
+            {% for letter in love_letters %}
+                <div>
+                    <h3>From: {{ letter.sender }} ({{ letter.date_sent }})</h3>
+                    <p>{{ letter.letter_content }}</p>
+                </div>
+            {% empty %}
+                <p>No letter yet.</p>
+            {% endfor %}
+        </section>
+    
+        <section class="duration" id="duration">
+            <h2>How Long Our Relationship is?</h2>
+            <div id="relationshipDuration">
+                <span class="digit-box">4</span>
+                <span class="digit-box">7</span>
+                <span class="digit-box">3</span>
+                <span class="label">days</span>
+                <span class="digit-box">2</span>
+                <span class="digit-box">1</span>
+                <span class="label">hours</span>
+                <span class="digit-box">3</span>
+                <span class="digit-box">5</span>
+                <span class="label">minutes</span>
+                <span class="digit-box">4</span>
+                <span class="digit-box">9</span>
+                <span class="label">seconds</span>
+            </div>
+        </section>
+        
+        
+        <section class="video-memories" id="video-memories">
+            <h2>Video Memories</h2>
+            {% for video in video_memories %}
+                <div>
+                    <video width="400" controls>
+                        <source src="{{ video.video.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p>{{ video.description }}</p>
+                </div>
+            {% empty %}
+                <p>No video memories yet.</p>
+            {% endfor %}
+        </section>
+    
+        <section class="valentine" id="valentine">
+            <h2>Special Valentine’s Message</h2>
+            {% for message in special_messages %}
+                <div>
+                    <h3>From: {{ message.sender }} ({{ message.date_sent }})</h3>
+                    <p>{{ message.message }}</p>
+                </div>
+            {% empty %}
+                <p>No special message yet.</p>
+            {% endfor %}
+        </section>
+        <div id="success-message" class="success-message">Hi Love 💕</div>
+
+
+    </div>
+    <script>
+        function moveNext(input, index) {
+            let nextInput = document.getElementsByClassName("pin-input")[index + 1];
+            let prevInput = document.getElementsByClassName("pin-input")[index - 1];
+    
+            if (input.value.length === 1 && nextInput) {
+                nextInput.focus();
+            }
+        }
+    
+        function checkPin() {
+        let pin = "";
+        document.querySelectorAll(".pin-input").forEach(input => pin += input.value);
+        
+        if (pin === "102523") {
+            sessionStorage.setItem("unlocked", "true");
+            document.getElementById("coverPage").style.display = "none";
+            document.getElementById("lockButton").style.display = "block"; // Show lock button
+
+            // Show success message
+            let successMessage = document.getElementById("success-message");
+            successMessage.style.display = "block";
+
+            setTimeout(() => {
+                successMessage.style.display = "none"; // Hide message after 2 seconds
+            }, 2000);
+        } else {
+            document.getElementById("error-message").style.display = "block";
+            document.querySelectorAll(".pin-input").forEach(input => input.value = ""); // Clear inputs
+            document.querySelector(".pin-input").focus(); // Focus first input
+        }
+    }
+
+    
+        // Handle backspace and Enter key
+        document.addEventListener("keydown", function(event) {
+            let activeElement = document.activeElement;
+            if (activeElement.classList.contains("pin-input")) {
+                let index = Array.from(document.getElementsByClassName("pin-input")).indexOf(activeElement);
+    
+                if (event.key === "Backspace" && index > 0 && !activeElement.value) {
+                    document.getElementsByClassName("pin-input")[index - 1].focus();
+                }
+    
+                if (event.key === "Enter") {
+                    checkPin();
+                }
+            }
+        });
+    
+        // Auto-hide the cover page if already unlocked
+        window.onload = function() {
+            if (sessionStorage.getItem("unlocked") === "true") {
+                document.getElementById("coverPage").style.display = "none";
+            }
+        };
+    </script>
+
+    <script>
+            window.onload = function() {
+        if (sessionStorage.getItem("unlocked") === "true") {
+            document.getElementById("coverPage").style.display = "none";
+            document.getElementById("lockButton").style.display = "block"; // Show lock button
+        }
+    };
+
+        function lockPage() {
+        sessionStorage.removeItem("unlocked"); // Remove session
+        location.reload(); // Refresh the page to show the lock screen
+    }
+    </script>
+    
+</body>
+</html>
+
+<script>
+// Relationship start date (October 25, 2023)
+const startDate = new Date("2023-10-25T00:00:00");
+
+function updateDuration() {
+    const now = new Date();
+    const diff = now - startDate;
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    const durationString = `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+    displayDuration(durationString);
+}
+
+function displayDuration(durationString) {
+    const container = document.getElementById("relationshipDuration");
+    container.innerHTML = ""; 
+
+    const parts = durationString.split(/(\d+)/).filter(Boolean); 
+
+    parts.forEach(part => {
+        if (/\d/.test(part)) {
+            part.split("").forEach(num => {
+                const span = document.createElement("span");
+                span.className = "digit-box";
+                span.textContent = num;
+                container.appendChild(span);
+            });
+        } else {
+            const label = document.createElement("span");
+            label.className = "label";
+            label.textContent = part;
+            container.appendChild(label);
+        }
+    });
+}
+
+// Update every second
+setInterval(updateDuration, 1000);
+updateDuration();
+
+</script>
+{% endblock %}

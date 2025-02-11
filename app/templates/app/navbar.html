@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 30px;
+            margin-top: 10px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            
+        }
+
+        .navbar-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            font-size: 0.5rem;
+            
+        }
+
+        .navbar-item {
+            margin-left: 1.5rem;
+        }
+
+        .navbar-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-link:hover {
+            color: #eb0e50;
+        }
+
+        /* Mobile Menu Toggle Button */
+        .navbar-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .navbar-toggle .bar {
+            height: 3px;
+            width: 25px;
+            background-color: #fff;
+            margin: 4px 0;
+            transition: 0.4s;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .navbar-menu {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background-color: #444;
+                border-radius: 10px;
+                margin-top: 1rem;
+            }
+
+            .navbar-menu.active {
+                display: flex;
+            }
+
+            .navbar-item {
+                margin: 0.5rem 0;
+                text-align: center;
+            }
+
+            .navbar-toggle {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <ul class="navbar-menu" id="navbar-menu">
+            <li class="navbar-item"><a href="#first-meeting" class="navbar-link">First Meeting</a></li>
+            <li class="navbar-item"><a href="#date" class="navbar-link">Memorable Dates</a></li>
+            <li class="navbar-item"><a href="#milestone" class="navbar-link">Milestones & Achievements</a></li>
+            <li class="navbar-item"><a href="#gallery" class="navbar-link">Photo Gallery</a></li>
+            <li class="navbar-item"><a href="#letter" class="navbar-link">Love Letters</a></li>
+            <li class="navbar-item"><a href="#duration" class="navbar-link">How Long Our Relationship is?</a></li>
+            <li class="navbar-item"><a href="#video-memories" class="navbar-link">Video Memories</a></li>
+            <li class="navbar-item"><a href="#valentine" class="navbar-link">Special Valentine’s Message</a></li>
+        </ul>
+    </nav>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const menuToggle = document.getElementById("mobile-menu"); // Ensure button ID is correct
+        const navbarMenu = document.getElementById("navbar-menu");
+        const navbarLinks = document.querySelectorAll(".navbar-link");
+
+        // Toggle Navbar for Mobile
+        menuToggle.addEventListener("click", function () {
+            navbarMenu.classList.toggle("active");
+        });
+
+        // Close Navbar when a link is clicked (on mobile)
+        navbarLinks.forEach(link => {
+            link.addEventListener("click", function () {
+                if (window.innerWidth <= 768) { // Only close on mobile
+                    navbarMenu.classList.remove("active");
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html>
